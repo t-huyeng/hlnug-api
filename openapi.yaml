@@ -1,34 +1,149 @@
 openapi: "3.0.0"
 info:
-  description: "API Description"
   version: "1.0.0"
-  title: "Amtsname: API Name"
+  title: "Messdatenportal des Hessisches Landesamt für Naturschutz, Umwelt und Geologie"
+  description: "Luftmessnetzzentrale in Hessen (immissionskataster@hlnug.hessen.de)"
+  contact:
+    name: "Hessisches Landesamt für Naturschutz, Umwelt und Geologie"
+    url: "www.hlnug.de"
+    email: "immissionskataster@hlnug.hessen.de"
 
 servers:
-  - url: "https://warnung.bund.de/api31"
+  - url: "https://app.hlnug.de/json"
+
+tags:
+  - name: api
+  - name: Luft
+  - name: Wasser
+  - name: Radioaktivität
 
 paths:
-  /dashboard/{AGS}.json:
+  /:
     get:
-      summary: Name des Endpoints
       responses:
-        '200':
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Result'
+        "200":
+          description: OK
+
+      summary: "API"
+      description: "Übersicht über die Themen der API"
+      tags:
+        - api
+
+  /lmw/getThemeStations/1:
+    get:
+      tags:
+        - Luft
+      responses:
+        "200":
+          description: OK
+      summary: Luftmessnetz
+      description: "Alle Stationen des Luftmessnetzes."
+
+  /lmw/getThemeStations/4:
+    get:
+      tags:
+        - Luft
+      responses:
+        "200":
+          description: OK
+      summary: Flughafen Frankfurt Luftdaten
+      description: "Alle Stationen um den Flughafen Frankfurt."
+
+  /lmw/getThemeStations/12:
+    get:
+      tags:
+        - Luft
+      responses:
+        "200":
+          description: OK
+      summary: Ultrafeine Partikel
+      description: "Alle Stationen die ultrafeine Partikel messen."
+
+  /wasser/getThemeStations/6:
+    get:
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Wasser
+      summary: "Fließgewässer"
+      description: "Alle Stationen in Fließgewässern."
+
+  /grdw/getThemeStations/10:
+    get:
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Wasser
+      summary: "Grundwasserstände (DFÜ)"
+      description: "Alle Stationen, die Grundwasserstände messen."
+
+  /radio/getThemeStations/6:
+    get:
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Radioaktivität
+
+      summary: "Radioaktivität"
+      description: "Alle Stationen, die Radioaktivität messen."
+
+  /radio/getThemeStations/{stationId}:
+    get:
+      tags:
+        - "Radioaktivität"
+      summary: Get station data.
+      description: "Information über eine Station, die Radioaktivität misst."
+      responses:
+        "200":
+          description: OK
       parameters:
         - in: path
-          required: true
-          name: AGS
+          name: stationId
           schema:
-            type: string
-          description: Amtlicher Gebietsschlüssel - kann z.B. von [hier](https://www.xrepository.de/api/xrepository/urn:de:bund:destatis:bevoelkerungsstatistik:schluessel:rs_2021-07-31/download/Regionalschl_ssel_2021-07-31.json) bezogen werden. Die Letzten 7 Stellen müssen dabei mit "0000000" ersetzt werden, weil die Daten nur auf [Kreisebene](https://de.wikipedia.org/wiki/Amtlicher_Gemeindeschl%C3%BCssel) bereitgestellt werden. 
-          example: "example-parameter"
+            type: integer
+          required: true
+          description: Numeric ID of the stadion
+          example: 8
 
-          
-components: 
-    schemas:
-      Result:
-        type: string
+  /diskw/getStation/{stationId}:
+    get:
+      summary: Get station data.
+      description: "Use any station ID to query for station information."
+      responses:
+        "200":
+          description: OK
+      parameters:
+        - in: path
+          name: stationId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the station
+          example: 394
+
+  /diskw/getStationLatestData/{stationId}/{standardparameter}:
+    get:
+      summary: Get station latest data.
+      description: ""
+      responses:
+        "200":
+          description: OK
+      parameters:
+        - in: path
+          name: stationId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the station
+          example: 394
+        - in: path
+          schema:
+            type: array
+            items:
+              type: integer
+          required: true
+          name: standardparameter
+          example: [110, 126, 138, 144]
