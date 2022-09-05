@@ -15,6 +15,7 @@ tags:
   - name: api
   - name: Luft
   - name: Wasser
+  - name: Grundwasser
   - name: Radioaktivität
 
 paths:
@@ -59,6 +60,50 @@ paths:
       summary: Ultrafeine Partikel
       description: "Alle Stationen die ultrafeine Partikel messen."
 
+  /lmw/getStationLatestData/{stationId}/{standardparameter}:
+    get:
+      summary: Get latest station data.
+      description: ""
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Luft
+      parameters:
+        - in: path
+          name: stationId
+          schema:
+            type: string
+          required: true
+          description: ID of the station
+          examples:
+            ultrafeine:
+              value: "0406"
+              summary: "Ultrafeine Partikel: Flörsheim"
+            ffmflughafen:
+              value: "1901"
+              summary: "Frankfurt-Flughafen-Ost"
+            luft:
+              value: "0115"
+              summary: "Luftnetz: Hügelstrasse Darmstadt"
+        - in: path
+          schema:
+            type: array
+            items:
+              type: integer
+          required: true
+          name: standardparameter
+          examples:
+            ultrafeine:
+              value: [14, 86, 87]
+              summary: "Ultrafeine Partikel"
+            ffmflughafen:
+              value: [14, 15, 44]
+              summary: "Flughafen Frankfurt Luftdaten"
+            luftdaten:
+              value: [14, 44, 83]
+              summary: "Luftdaten"
+
   /wasser/getThemeStations/6:
     get:
       responses:
@@ -75,11 +120,37 @@ paths:
         "200":
           description: OK
       tags:
-        - Wasser
+        - Grundwasser
       summary: "Grundwasserstände (DFÜ)"
       description: "Alle Stationen, die Grundwasserstände messen."
 
-  /radio/getThemeStations/6:
+  /grdw/getStationLatestData/{stationId}/{standardparameter}:
+    get:
+      summary: Get latest station data.
+      description: ""
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Grundwasser
+      parameters:
+        - in: path
+          name: stationId
+          schema:
+            type: string
+          required: true
+          description: ID of the station
+          example: "11296"
+        - in: path
+          schema:
+            type: array
+            items:
+              type: integer
+          required: true
+          name: standardparameter
+          example: [106]
+
+  /radio/getThemeStations/8:
     get:
       responses:
         "200":
@@ -90,23 +161,31 @@ paths:
       summary: "Radioaktivität"
       description: "Alle Stationen, die Radioaktivität messen."
 
-  /radio/getThemeStations/{stationId}:
+  /radio/getStationLatestData/{stationId}/{standardparameter}:
     get:
-      tags:
-        - "Radioaktivität"
-      summary: Get station data.
-      description: "Information über eine Station, die Radioaktivität misst."
+      summary: Get latest station data.
+      description: ""
       responses:
         "200":
           description: OK
+      tags:
+        - Radioaktivität
       parameters:
         - in: path
           name: stationId
           schema:
-            type: integer
+            type: string
           required: true
-          description: Numeric ID of the stadion
-          example: 8
+          description: ID of the station
+          example: DI19
+        - in: path
+          schema:
+            type: array
+            items:
+              type: integer
+          required: true
+          name: standardparameter
+          example: [1, 2]
 
   /diskw/getStation/{stationId}:
     get:
@@ -119,26 +198,37 @@ paths:
         - in: path
           name: stationId
           schema:
-            type: integer
+            type: string
           required: true
-          description: Numeric ID of the station
-          example: 394
+          description: ID of the station
+          examples:
+            wasser:
+              value: "394"
+              summary: "Wasser: Darmbach, Darmstadt, Zulauf Grosser Woog"
+            grundwasser:
+              value: "11296"
+              summary: "Grundwasser: Heusenstamm"
+            radio:
+              value: "DI01"
+              summary: "Radioaktivität: Hamm Pumpwerk"
 
   /diskw/getStationLatestData/{stationId}/{standardparameter}:
     get:
-      summary: Get station latest data.
+      summary: Get latest station data.
       description: ""
       responses:
         "200":
           description: OK
+      tags:
+        - Wasser
       parameters:
         - in: path
           name: stationId
           schema:
-            type: integer
+            type: string
           required: true
-          description: Numeric ID of the station
-          example: 394
+          description: ID of the station
+          example: "394"
         - in: path
           schema:
             type: array
@@ -146,4 +236,4 @@ paths:
               type: integer
           required: true
           name: standardparameter
-          example: [110, 126, 138, 144]
+          example: [63, 67, 55, 69, 110, 126, 138, 144]
