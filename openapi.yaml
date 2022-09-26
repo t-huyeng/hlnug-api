@@ -5,7 +5,7 @@ info:
   description: "Luftmessnetzzentrale in Hessen (immissionskataster@hlnug.hessen.de)"
   contact:
     name: "Hessisches Landesamt für Naturschutz, Umwelt und Geologie"
-    url: "www.hlnug.de"
+    url: "https://www.hlnug.de"
     email: "immissionskataster@hlnug.hessen.de"
 
 servers:
