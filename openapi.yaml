@@ -21,6 +21,7 @@ tags:
 paths:
   /:
     get:
+      operationId: GetAPI
       responses:
         "200":
           description: OK
@@ -32,6 +33,7 @@ paths:
 
   /lmw/getThemeStations/1:
     get:
+      operationId: GetLuftStationen
       tags:
         - Luft
       responses:
@@ -42,6 +44,7 @@ paths:
 
   /lmw/getThemeStations/4:
     get:
+      operationId: GetLuftFrankfurtFlughafenStationen
       tags:
         - Luft
       responses:
@@ -52,6 +55,7 @@ paths:
 
   /lmw/getThemeStations/12:
     get:
+      operationId: GetUltrafeinePartikelStationen
       tags:
         - Luft
       responses:
@@ -62,6 +66,7 @@ paths:
 
   /lmw/getStationLatestData/{stationId}/{standardparameter}:
     get:
+      operationId: GetStationLatestData
       summary: Get latest station data.
       description: ""
       responses:
@@ -106,6 +111,7 @@ paths:
 
   /wasser/getThemeStations/6:
     get:
+      operationId: GetWasserStationen
       responses:
         "200":
           description: OK
@@ -116,6 +122,7 @@ paths:
 
   /grdw/getThemeStations/10:
     get:
+      operationId: GetGrundwasserStationen
       responses:
         "200":
           description: OK
@@ -126,6 +133,7 @@ paths:
 
   /grdw/getStationLatestData/{stationId}/{standardparameter}:
     get:
+      operationId: GetGrundwasserStationLatestData
       summary: Get latest station data.
       description: ""
       responses:
@@ -152,6 +160,7 @@ paths:
 
   /radio/getThemeStations/8:
     get:
+      operationId: GetRadioaktivitaetStationen
       responses:
         "200":
           description: OK
@@ -163,6 +172,7 @@ paths:
 
   /radio/getStationLatestData/{stationId}/{standardparameter}:
     get:
+      operationId: GetRadioaktivitaetStationLatestData
       summary: Get latest station data.
       description: ""
       responses:
@@ -189,8 +199,11 @@ paths:
 
   /diskw/getStation/{stationId}:
     get:
+      operationId: GetStation
       summary: Get station data.
       description: "Use any station ID to query for station information."
+      tags:
+        - api
       responses:
         "200":
           description: OK
@@ -214,6 +227,7 @@ paths:
 
   /diskw/getStationLatestData/{stationId}/{standardparameter}:
     get:
+      operationId: GetWasserStationLatestData
       summary: Get latest station data.
       description: ""
       responses:
