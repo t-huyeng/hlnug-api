@@ -3,15 +3,14 @@ additionalProperties:
   packageName: "hlnug-api"
   infoName: "BundesAPI"
   infoEmail: "kontakt@bund.dev"
-  packageVersion: <VERSION>
-  # TODO
-  packageUrl: "https://github.com/bundesAPI/<REPO>"
+  packageVersion: 0.1.0
+  # TODO Change to BundesAPI
+  packageUrl: "https://github.com/t-huyeng/hlnug-api"
   namespace: "deutschland"
   docLanguage: "de"
 gitHost: "github.com"
 gitUserId: "bundesAPI"
-# TODO
-gitRepoId: "<REPO-ID>"
+gitRepoId: "hlnug-api"
 files:
   pyproject.mustache:
     destinationFilename: pyproject.toml
