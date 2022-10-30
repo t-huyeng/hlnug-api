@@ -24,7 +24,7 @@ jobs:
           set -C; echo "extends: spectral:oas" > .spectral.yaml
 
       # Run Spectral
-      - name: "Run Spectral - OpenAPI check"
+      - name: "Lint file"
         uses: stoplightio/spectral-action@latest
         with:
           file_glob: ${{ matrix.openapi }}
