@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
   version: "1.0.0"
   title: "Messdatenportal des Hessisches Landesamt für Naturschutz, Umwelt und Geologie"
-  description: "Luftmessnetzzentrale in Hessen (immissionskataster@hlnug.hessen.de)"
+  description: "Messdatenportal in Hessen (immissionskataster@hlnug.hessen.de)"
   contact:
     name: "Hessisches Landesamt für Naturschutz, Umwelt und Geologie"
     url: "https://www.hlnug.de"
@@ -30,6 +30,34 @@ paths:
       description: "Übersicht über die Themen der API"
       tags:
         - api
+
+  /diskw/getStation/{stationId}:
+    get:
+      operationId: GetStation
+      summary: Get station data.
+      description: "Use any station ID to query for station information."
+      tags:
+        - api
+      responses:
+        "200":
+          description: OK
+      parameters:
+        - in: path
+          name: stationId
+          schema:
+            type: string
+          required: true
+          description: ID of the station
+          examples:
+            wasser:
+              value: "394"
+              summary: "Wasser: Darmbach, Darmstadt, Zulauf Grosser Woog"
+            grundwasser:
+              value: "11296"
+              summary: "Grundwasser: Heusenstamm"
+            radio:
+              value: "DI01"
+              summary: "Radioaktivität: Hamm Pumpwerk"
 
   /lmw/getThemeStations/1:
     get:
@@ -68,7 +96,7 @@ paths:
     get:
       operationId: GetStationLatestData
       summary: Get latest station data.
-      description: ""
+      description: "Gibt die letzten Daten einer Station zurück (ultrafeine Partikel)"
       responses:
         "200":
           description: OK
@@ -120,6 +148,33 @@ paths:
       summary: "Fließgewässer"
       description: "Alle Stationen in Fließgewässern."
 
+  /diskw/getStationLatestData/{stationId}/{standardparameter}:
+    get:
+      operationId: GetWasserStationLatestData
+      summary: Get latest station data.
+      description: "Gibt die letzten Daten einer Station zurück (Fließgewässer)"
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Wasser
+      parameters:
+        - in: path
+          name: stationId
+          schema:
+            type: string
+          required: true
+          description: ID of the station
+          example: "394"
+        - in: path
+          schema:
+            type: array
+            items:
+              type: integer
+          required: true
+          name: standardparameter
+          example: [63, 67, 55, 69, 110, 126, 138, 144]
+
   /grdw/getThemeStations/10:
     get:
       operationId: GetGrundwasserStationen
@@ -135,7 +190,7 @@ paths:
     get:
       operationId: GetGrundwasserStationLatestData
       summary: Get latest station data.
-      description: ""
+      description: "Gibt die letzten Daten einer Station zurück (Grundwasserstände)"
       responses:
         "200":
           description: OK
@@ -167,14 +222,14 @@ paths:
       tags:
         - Radioaktivität
 
-      summary: "Radioaktivität"
-      description: "Alle Stationen, die Radioaktivität messen."
+      summary: "Ortsdosisleistung Biblis"
+      description: "Alle Stationen, die Radioaktivität messen. (Ortsdosisleistung Biblis)"
 
   /radio/getStationLatestData/{stationId}/{standardparameter}:
     get:
       operationId: GetRadioaktivitaetStationLatestData
-      summary: Get latest station data.
-      description: ""
+      summary: "Ortsdosisleistung Biblis: Get latest station data."
+      description: "Ortsdosisleistung Biblis"
       responses:
         "200":
           description: OK
@@ -197,16 +252,28 @@ paths:
           name: standardparameter
           example: [1, 2]
 
-  /diskw/getStation/{stationId}:
+  /insitu/getThemeStations/16:
     get:
-      operationId: GetStation
-      summary: Get station data.
-      description: "Use any station ID to query for station information."
-      tags:
-        - api
+      operationId: GetRadioaktivitaetInsituStationen
       responses:
         "200":
           description: OK
+      tags:
+        - Radioaktivität
+
+      summary: "Boden In-situ (Radioaktivität)"
+      description: "Alle Stationen des Bereiches Boden In-situ (Radioaktivität)."
+
+  /insitu/getStationLatestData/{stationId}/{standardparameter}:
+    get:
+      operationId: GetRadioaktivitaetInsituStationLatestData
+      summary: "Boden In-situ (Radioaktivität): Get latest station data."
+      description: "Gibt die letzten Daten einer Station zurück (Boden In-situ (Radioaktivität))"
+      responses:
+        "200":
+          description: OK
+      tags:
+        - Radioaktivität
       parameters:
         - in: path
           name: stationId
@@ -215,34 +282,9 @@ paths:
           required: true
           description: ID of the station
           examples:
-            wasser:
-              value: "394"
-              summary: "Wasser: Darmbach, Darmstadt, Zulauf Grosser Woog"
-            grundwasser:
-              value: "11296"
-              summary: "Grundwasser: Heusenstamm"
-            radio:
-              value: "DI01"
-              summary: "Radioaktivität: Hamm Pumpwerk"
-
-  /diskw/getStationLatestData/{stationId}/{standardparameter}:
-    get:
-      operationId: GetWasserStationLatestData
-      summary: Get latest station data.
-      description: ""
-      responses:
-        "200":
-          description: OK
-      tags:
-        - Wasser
-      parameters:
-        - in: path
-          name: stationId
-          schema:
-            type: string
-          required: true
-          description: ID of the station
-          example: "394"
+            darmstadt:
+              value: "06411000"
+              summary: "Station in Darmstadt"
         - in: path
           schema:
             type: array
@@ -250,4 +292,4 @@ paths:
               type: integer
           required: true
           name: standardparameter
-          example: [63, 67, 55, 69, 110, 126, 138, 144]
+          example: [178, 180, 182, 184, 152, 154, 156, 158]
