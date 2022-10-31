@@ -9,7 +9,7 @@ info:
     email: "immissionskataster@hlnug.hessen.de"
 
 servers:
-  - url: "https://app.hlnug.de/json"
+  - url: "https://app.hlnug.de/json/"
 
 tags:
   - name: api

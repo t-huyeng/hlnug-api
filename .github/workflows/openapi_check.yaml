@@ -5,17 +5,15 @@ on:
   pull_request:
     paths:
       - "openapi*.yaml"
+  workflow_dispatch:
 
 jobs:
   openapi_check:
     name: "OpenAPI check"
-    strategy:
-      matrix:
-        openapi: [openapi.yaml, openapi_en.yaml]
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       # Create default .spectral.yaml file used for linting if its not existing already
       - name: "Create spectral file if it not exists"
@@ -27,5 +25,5 @@ jobs:
       - name: "Lint file"
         uses: stoplightio/spectral-action@latest
         with:
-          file_glob: ${{ matrix.openapi }}
+          file_glob: openapi.yaml
           spectral_ruleset: .spectral.yaml
